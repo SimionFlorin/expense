@@ -1,0 +1,16 @@
+{
+  "name": "helloDb",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "express": "4.17.1",
+    "nodemon": "1.19.1",
+    "sqlite3": "4.0.9"
+  }
+}
