@@ -1,0 +1,86 @@
+-- ****************** SqlDBM: Microsoft SQL Server ******************
+-- ******************************************************************
+
+-- ************************************** [Transaction]
+
+CREATE TABLE [Transaction]
+(
+ [TransactionId]   int NOT NULL ,
+ [TransactionDate] datetime NOT NULL ,
+ [Sum]             float NOT NULL ,
+ [Remarks]         varchar(100) NOT NULL ,
+
+
+ CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED ([TransactionId] ASC)
+);
+GO
+
+
+
+
+
+
+
+
+-- ************************************** [Category]
+
+CREATE TABLE [Category]
+(
+ [CategoryId]    int NOT NULL ,
+ [Name]          varchar(100) NOT NULL ,
+ [TransactionId] int NOT NULL ,
+
+
+ CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED ([CategoryId] ASC),
+ CONSTRAINT [FK_18] FOREIGN KEY ([TransactionId])  REFERENCES [Transaction]([TransactionId])
+);
+GO
+
+
+CREATE NONCLUSTERED INDEX [fkIdx_18] ON [Category] 
+ (
+  [TransactionId] ASC
+ )
+
+GO
+
+
+-- ****************** SqlDBM: Microsoft SQL Server ******************
+-- ******************************************************************
+
+-- ************************************** [CategoryType]
+
+CREATE TABLE [CategoryType]
+(
+ [TypeId]      int NOT NULL ,
+ [Name]        varchar(100) NOT NULL ,
+ [Description] varchar(100) NOT NULL ,
+ [CategoryId]  int NOT NULL ,
+
+
+ CONSTRAINT [PK_Type] PRIMARY KEY CLUSTERED ([TypeId] ASC),
+ CONSTRAINT [FK_26] FOREIGN KEY ([CategoryId])  REFERENCES [Category]([CategoryId])
+);
+GO
+
+
+CREATE NONCLUSTERED INDEX [fkIdx_26] ON [CategoryType] 
+ (
+  [CategoryId] ASC
+ )
+
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+

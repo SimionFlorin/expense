@@ -4,7 +4,7 @@ const config = require('./config');
 const db = require('./db');
 
 const app = express();
-
+app.use(express.json())
 require('./init/initDb')();
 require('./init/initExpress')(app);
 require('./init/initRoutes')(app);
