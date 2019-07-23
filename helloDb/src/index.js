@@ -1,13 +1,14 @@
 const http = require('http');
-const express = require('express');
 const config = require('./config');
 const db = require('./db');
 
-const app = express();
-app.use(express.json())
-require('./init/initDb')();
-require('./init/initExpress')(app);
-require('./init/initRoutes')(app);
+
+// const app = express();
+
+
+
+const app = require('./app');
+
 
 const server = http.createServer(app);
 
