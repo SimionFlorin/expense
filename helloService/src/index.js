@@ -30,7 +30,7 @@ const resolvers = {
     },
     Todo: {
         description: () => {
-            console.log('this is called only when description is defined in query');
+            console.log('this is called only when description is defined in query or todo mutation');
             return request('http://localhost:8080/', {method: 'GET'})
         },
     },
