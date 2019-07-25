@@ -54,6 +54,24 @@ beforeEach(()=>{
         })
     })
 
+    it('should return an error', async()=>{
+
+        const newTransaction={
+            "Sum": 22,
+            "Remarks": "ceva",
+            "CategoryId": 100,
+        }
+
+        await request(app)
+        .post('/Transaction')
+        .send(newTransaction)
+        .set('Accept','application/json')
+        .then((res)=>{
+            expect(res.status).toBe(500)
+        })
+    })
+
+
     
     
 

@@ -9,7 +9,7 @@ exports.get = function (req, res) {
             console.log(row);
             return res.status(200).send(row);
         } else {
-            return res.status(400).send('Bad request');
+            return res.status(400).send('Bad Request');
         }
     });
 };

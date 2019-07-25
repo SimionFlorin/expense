@@ -28,4 +28,14 @@ let app
         })
 
     })
+    it(' should return Bad Request', async ()=>{
+        await request(app)
+        .get('/Categories')
+        .then((res)=>{
+
+            expect(res.status).toBe(200)
+            expect(JSON.parse(res.text)).toStrictEqual(defaultCategories)
+        })
+
+    })
 })

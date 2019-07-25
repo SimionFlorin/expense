@@ -95,10 +95,12 @@ exports.put=(req,res)=>{
             console.log(' e in err');
             return res.status(500).send(err.message)
         }
-        else{
+        if(this.changes){
             console.log(this.changes);
             return res.status(200).send({Name,Description,CategoryId,id})
+            
         }
+        else return res.status(400).send('Bad Request')
     })
 }
 exports.delete=(req,res)=>{
@@ -110,9 +112,10 @@ exports.delete=(req,res)=>{
 
     db.run(sql,TypeId, function(err){
         if(err) return res.status(500).send(err.message)
-        else{
+        else if(this.changes>0){
             console.log(this)
-            return res.status(200).send('OK')
+            return res.status(200).send('Item deleted')
         }
+        else return res.status(400).send('Bad Request')
     })
 }

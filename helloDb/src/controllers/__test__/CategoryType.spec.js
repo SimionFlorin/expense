@@ -99,26 +99,62 @@ let app
         })
     })
 
-    // it( 'should return Bad Request when calling the post method on /CategoryType ' , async()=>{
 
-    //     const newType={
-    //         Name: "dividende",
-    //         Description: "actiuni",
-    //         CategoryId: 100
-    //     } 
+    it( 'should return an error message from Sqlite (FK constraint)' , async()=>{
 
-    //     await request(app)
-    //     .post('/CategoryType')
-    //     .send(newType)
-    //     .set('Accept','application/json')
-    //     .then((res)=>{
-    //         expect(res.status).toBe(200)
-    //         const {TypeId,Name,Description,CategoryId}=JSON.parse(res.text)
-    //         expect(TypeId).toBeGreaterThan(0)
-    //         expect(TypeId).toBe(10)
-    //         expect({Name,Description,CategoryId}).toStrictEqual(newType)
-    //     })
-    // })
+        const newType={
+            Name: "dividende",
+            Description: "actiuni",
+            CategoryId: 111
+        } 
+
+        await request(app)
+        .post('/CategoryType')
+        .send(newType)
+        .set('Accept','application/json')
+        .then((res)=>{
+            expect(res.status).toBe(500)
+           
+        })
+    })
+
+    it( 'should return a Bad Request ' , async()=>{
+
+        const newType={
+            "Name": "dividende",
+            "Description": "actiuni",
+            "CategoryId": 1
+        } 
+
+        await request(app)
+        .put('/CategoryType/100')
+        .send(newType)
+        .set('Accept','application/json')
+        .then((res)=>{
+            expect(res.status).toBe(400)
+           expect(res.text).toBe('Bad Request')
+        })
+    })
+
+
+    it( 'should return a error message beacause of foreign key constraints' , async()=>{
+
+        const newType={
+            "Name": "dividende",
+            "Description": "actiuni",
+            "CategoryId": 100
+        } 
+
+        await request(app)
+        .put('/CategoryType/1')
+        .send(newType)
+        .set('Accept','application/json')
+        .then((res)=>{
+            expect(res.status).toBe(500)
+        })
+    })
+
+    
 
     it( 'should update a type by its id ' , async()=>{
 
@@ -146,7 +182,17 @@ let app
         .delete('/CategoryType/1')
         .then((res)=>{
             expect(res.status).toBe(200)
-            expect(res.text).toBe('OK')
+            expect(res.text).toBe('Item deleted')
+        })
+    })
+
+    it( 'should return Bad Request', async ()=>{
+
+        await request(app)
+        .delete('/CategoryType/100')
+        .then((res)=>{
+            expect(res.status).toBe(400)
+            expect(res.text).toBe('Bad Request')
         })
     })
 
