@@ -1,7 +1,7 @@
 const db = require('../db');
 
 exports.get = function (req, res) {
-    const sql = `SELECT TransactionDate, Sum, Remarks from TransactionTable`;
+    const sql = `SELECT transactionDate, sum, remarks from TransactionTable`;
     db.all(sql,{}, (err, row) => {
         console.log(sql);
         if (err) return res.status(500).send(err.message);
@@ -16,7 +16,7 @@ exports.get = function (req, res) {
 
 exports.getById = function (req, res) {
     const { id } = req.params;
-    const sql = `SELECT TransactionDate, Sum, Remarks from TransactionTable WHERE TransactionId = ?`;
+    const sql = `SELECT transactionDate, sum, remarks from TransactionTable WHERE transactionId = ?`;
     db.get(sql,[id], (err, row) => {
         console.log(sql);
         if (err) return res.status(500).send(err.message);
@@ -33,20 +33,20 @@ exports.post=(req,res)=> {
 
     console.log(req.body)
 
-    const{Sum, Remarks, CategoryId}=req.body
+    const{sum, remarks, typeId}=req.body
     
-    const TransactionDate = req.body.TransactionDate?req.body.TransactionDate:new Date()
-    // const { Sum, Description, Remarks, TransactionDate, CategoryId} = req.body;
-    const sql='INSERT INTO TransactionTable(Sum, Remarks, TransactionDate, CategoryId) VALUES(?,?,?,?)'
-    // const categoryTypeTableData = db.prepare("INSERT INTO CategoryType(Name,Description,CategoryId) VALUES (?,?,?)");
-    db.run(sql,[Sum, Remarks, TransactionDate, CategoryId], function (err,row){
+    const transactionDate = req.body.transactionDate?req.body.transactionDate:new Date()
+    // const { sum, description, remarks, transactionDate, typeId} = req.body;
+    const sql='INSERT INTO TransactionTable(sum, remarks, transactionDate, typeId) VALUES(?,?,?,?)'
+    // const categoryTypeTableData = db.prepare("INSERT INTO CategoryType(name,description,typeId) VALUES (?,?,?)");
+    db.run(sql,[sum, remarks, transactionDate, typeId], function (err,row){
         console.log(sql);
         if(err){
             console.log(' e in err')
         return res.status(500).send(err.message)
     }else{
         console.log(this.lastID);
-        return res.status(200).send({...req.body, TransactionDate, TransactionId: this.lastID})
+        return res.status(200).send({...req.body, transactionDate, transactionId: this.lastID})
     }
     })
 }

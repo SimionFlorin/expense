@@ -1,60 +1,60 @@
 
 exports.incomeTypes=[
     {
-        "TypeId": 1,
-        "Name": "salary",
-        "Description": "monthly salary",
-        "CategoryId": 1
+        "typeId": 1,
+        "name": "salary",
+        "description": "monthly salary",
+        "categoryId": 1
     },
     {
-        "TypeId": 2,
-        "Name": "other",
-        "Description": "IDK",
-        "CategoryId": 1
+        "typeId": 2,
+        "name": "other",
+        "description": "IDK",
+        "categoryId": 1
     },
     {
-        "TypeId": 3,
-        "Name": "carryover",
-        "Description": "tax deductions from previous losses",
-        "CategoryId": 1
+        "typeId": 3,
+        "name": "carryover",
+        "description": "tax deductions from previous losses",
+        "categoryId": 1
     }
 ]
 
 exports.expenseTypes=[
     {
-        "TypeId": 4,
-        "Name": "Expense",
-        "Description": "Eating outside home",
-        "CategoryId": 2
+        "typeId": 4,
+        "name": "Expense",
+        "description": "Eating outside home",
+        "categoryId": 2
     },
     {
-        "TypeId": 5,
-        "Name": "Expense",
-        "Description": "SouthPark and Rick & Morty",
-        "CategoryId": 2
+        "typeId": 5,
+        "name": "Expense",
+        "description": "SouthPark and Rick & Morty",
+        "categoryId": 2
     },
     {
-        "TypeId": 6,
-        "Name": "Expense",
-        "Description": "Mall",
-        "CategoryId": 2
+        "typeId": 6,
+        "name": "Expense",
+        "description": "Mall",
+        "categoryId": 2
     },
     {
-        "TypeId": 7,
-        "Name": "Expense",
-        "Description": "Fuel for car",
-        "CategoryId": 2
+        "typeId": 7,
+        "name": "Expense",
+        "description": "Fuel for car",
+        "categoryId": 2
     },
     {
-        "TypeId": 8,
-        "Name": "Expense",
-        "Description": "stuff",
-        "CategoryId": 2
+        "typeId": 8,
+        "name": "Expense",
+        "description": "stuff",
+        "categoryId": 2
     },
     {
-        "TypeId": 9,
-        "Name": "Expense",
-        "Description": "Expenses typical to the days you don't work",
-        "CategoryId": 2
+        "typeId": 9,
+        "name": "Expense",
+        "description": "Expenses typical to the days you don't work",
+        "categoryId": 2
     }
 ]

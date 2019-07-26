@@ -13,7 +13,7 @@ module.exports = (app) => {
     app.put('/CategoryType/:id',CategoryTypeController.put)
     app.delete('/CategoryType/:id',CategoryTypeController.delete)
     app.get('/CategoryType/:id', CategoryTypeController.getById)
-    app.get('/getTypesByCategoryName/:Name', CategoryTypeController.getTypesByCategoryName)
+    app.get('/getTypesByCategoryName/:name', CategoryTypeController.getTypesByCategoryName)
 
     
 };

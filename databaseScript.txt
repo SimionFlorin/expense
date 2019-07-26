@@ -5,13 +5,13 @@
 
 CREATE TABLE [Transaction]
 (
- [TransactionId]   int NOT NULL ,
- [TransactionDate] datetime NOT NULL ,
- [Sum]             float NOT NULL ,
- [Remarks]         varchar(100) NOT NULL ,
+ [transactionId]   int NOT NULL ,
+ [transactionDate] datetime NOT NULL ,
+ [sum]             float NOT NULL ,
+ [remarks]         varchar(100) NOT NULL ,
 
 
- CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED ([TransactionId] ASC)
+ CONSTRAINT [PK_Transaction] PRIMARY KEY CLUSTERED ([transactionId] ASC)
 );
 GO
 
@@ -26,20 +26,20 @@ GO
 
 CREATE TABLE [Category]
 (
- [CategoryId]    int NOT NULL ,
- [Name]          varchar(100) NOT NULL ,
- [TransactionId] int NOT NULL ,
+ [categoryId]    int NOT NULL ,
+ [name]          varchar(100) NOT NULL ,
+ [transactionId] int NOT NULL ,
 
 
- CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED ([CategoryId] ASC),
- CONSTRAINT [FK_18] FOREIGN KEY ([TransactionId])  REFERENCES [Transaction]([TransactionId])
+ CONSTRAINT [PK_Category] PRIMARY KEY CLUSTERED ([categoryId] ASC),
+ CONSTRAINT [FK_18] FOREIGN KEY ([transactionId])  REFERENCES [Transaction]([transactionId])
 );
 GO
 
 
 CREATE NONCLUSTERED INDEX [fkIdx_18] ON [Category] 
  (
-  [TransactionId] ASC
+  [transactionId] ASC
  )
 
 GO
@@ -52,19 +52,19 @@ GO
 
 CREATE TABLE [CategoryType]
 (
- [TypeId]      int PRIMARY KEY ,
- [Name]        varchar(100) NOT NULL ,
- [Description] varchar(100) NOT NULL ,
- [CategoryId]  int NOT NULL ,
+ [typeId]      int PRIMARY KEY ,
+ [name]        varchar(100) NOT NULL ,
+ [description] varchar(100) NOT NULL ,
+ [categoryId]  int NOT NULL ,
 
- CONSTRAINT [FK_26] FOREIGN KEY ([CategoryId])  REFERENCES [Category]([CategoryId])
+ CONSTRAINT [FK_26] FOREIGN KEY ([categoryId])  REFERENCES [Category]([categoryId])
 );
 GO
 
 
 CREATE NONCLUSTERED INDEX [fkIdx_26] ON [CategoryType] 
  (
-  [CategoryId] ASC
+  [categoryId] ASC
  )
 
 GO

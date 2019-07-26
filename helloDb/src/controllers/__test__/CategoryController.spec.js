@@ -10,12 +10,12 @@ let app
 
     const defaultCategories=[
         {
-            CategoryId:1,
-            Name:'Income'
+            categoryId:1,
+            name:'Income'
         },
         {
-            CategoryId:2,
-            Name:'Expense'
+            categoryId:2,
+            name:'Expense'
         }
     ]
     it(' should get Income and Expense categories', async ()=>{

@@ -3,8 +3,8 @@ const db = require('../db');
 const categoryTable=`
 CREATE TABLE [Category]
 (
- [CategoryId]    INTEGER PRIMARY KEY AUTOINCREMENT,
- [Name]          varchar(100) NOT NULL 
+ [categoryId]    INTEGER PRIMARY KEY AUTOINCREMENT,
+ [name]          varchar(100) NOT NULL 
 
 );
 `
@@ -12,23 +12,23 @@ const transactionTable =
 `
 CREATE TABLE TransactionTable
 (
- [TransactionId]   INTEGER PRIMARY KEY AUTOINCREMENT,
- [TransactionDate] datetime NOT NULL ,
- [Sum]             float NOT NULL  ,
- [Remarks]         varchar(100) NOT NULL,
- [CategoryId]      INTEGER ,
-  FOREIGN KEY (CategoryId)  REFERENCES Category(CategoryId)
+ [transactionId]   INTEGER PRIMARY KEY AUTOINCREMENT,
+ [transactionDate] datetime NOT NULL ,
+ [sum]             float NOT NULL  ,
+ [remarks]         varchar(100) NOT NULL,
+ [typeId]      INTEGER ,
+  FOREIGN KEY (typeId)  REFERENCES CategoryType(typeId)
 )
 `
 const categoryType = `
 CREATE TABLE [CategoryType]
 (
- [TypeId]      INTEGER PRIMARY KEY AUTOINCREMENT,
- [Name]        varchar(100) NOT NULL ,
- [Description] varchar(100) NOT NULL ,
- [CategoryId]  int NOT NULL ,
+ [typeId]      INTEGER PRIMARY KEY AUTOINCREMENT,
+ [name]        varchar(100) NOT NULL ,
+ [description] varchar(100) NOT NULL ,
+ [categoryId]  int NOT NULL ,
 
-FOREIGN KEY (CategoryId)  REFERENCES Category(CategoryId)
+FOREIGN KEY (categoryId)  REFERENCES Category(categoryId)
 );
 `
 
@@ -37,7 +37,7 @@ module.exports = () => {
         // db.run("CREATE TABLE IF NOT EXISTS hello (id integer PRIMARY KEY,name text NOT NULL)");
       
         console.log('merge tabel')
-        // const stmt = db.prepare("INSERT INTO Category(Name,TransactionId) VALUES (?,1)");
+        // const stmt = db.prepare("INSERT INTO Category(name,transactionId) VALUES (?,1)");
 
 
         console.log(db.run('PRAGMA foreign_keys'))
@@ -46,9 +46,9 @@ module.exports = () => {
         db.run(transactionTable)
         db.run(categoryType)
 
-        const categoryTableData = db.prepare("INSERT INTO Category(Name) VALUES (?)");
-        // const transactionTableData = db.prepare("INSERT INTO TransactionTable(TransactionDate,Sum,Remarks,CategoryId) VALUES (?,?,?,?)");
-        const categoryTypeTableData = db.prepare("INSERT INTO CategoryType(Name,Description,CategoryId) VALUES (?,?,?)");
+        const categoryTableData = db.prepare("INSERT INTO Category(name) VALUES (?)");
+        // const transactionTableData = db.prepare("INSERT INTO TransactionTable(transactionDate,sum,remarks,typeId) VALUES (?,?,?,?)");
+        const categoryTypeTableData = db.prepare("INSERT INTO CategoryType(name,description,categoryId) VALUES (?,?,?)");
         
         
         categoryTableData.run('Income')

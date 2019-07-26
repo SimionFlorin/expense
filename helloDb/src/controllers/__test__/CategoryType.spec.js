@@ -11,10 +11,10 @@ let app
     it( 'should get the Type using an id', async ()=>{
 
         const type1={
-            "TypeId": 1,
-            "Name": "salary",
-            "Description": "monthly salary",
-            "CategoryId": 1
+            "typeId": 1,
+            "name": "salary",
+            "description": "monthly salary",
+            "categoryId": 1
         }
         await request(app)
         .get('/CategoryType/1')
@@ -26,10 +26,10 @@ let app
     it( 'should return Bad Request ', async ()=>{
 
         const type1={
-            "TypeId": 1,
-            "Name": "salary",
-            "Description": "monthly salary",
-            "CategoryId": 1
+            "typeId": 1,
+            "name": "salary",
+            "description": "monthly salary",
+            "categoryId": 1
         }
         await request(app)
         .get('/CategoryType/100')
@@ -81,9 +81,9 @@ let app
     it( 'should create a type ' , async()=>{
 
         const newType={
-            Name: "dividende",
-            Description: "actiuni",
-            CategoryId: 1
+            name: "dividende",
+            description: "actiuni",
+            categoryId: 1
         } 
 
         await request(app)
@@ -92,10 +92,10 @@ let app
         .set('Accept','application/json')
         .then((res)=>{
             expect(res.status).toBe(200)
-            const {TypeId,Name,Description,CategoryId}=JSON.parse(res.text)
-            expect(TypeId).toBeGreaterThan(0)
-            expect(TypeId).toBe(10)
-            expect({Name,Description,CategoryId}).toStrictEqual(newType)
+            const {typeId,name,description,categoryId}=JSON.parse(res.text)
+            expect(typeId).toBeGreaterThan(0)
+            expect(typeId).toBe(10)
+            expect({name,description,categoryId}).toStrictEqual(newType)
         })
     })
 
@@ -103,9 +103,9 @@ let app
     it( 'should return an error message from Sqlite (FK constraint)' , async()=>{
 
         const newType={
-            Name: "dividende",
-            Description: "actiuni",
-            CategoryId: 111
+            name: "dividende",
+            description: "actiuni",
+            categoryId: 111
         } 
 
         await request(app)
@@ -121,9 +121,9 @@ let app
     it( 'should return a Bad Request ' , async()=>{
 
         const newType={
-            "Name": "dividende",
-            "Description": "actiuni",
-            "CategoryId": 1
+            "name": "dividende",
+            "description": "actiuni",
+            "categoryId": 1
         } 
 
         await request(app)
@@ -140,9 +140,9 @@ let app
     it( 'should return a error message beacause of foreign key constraints' , async()=>{
 
         const newType={
-            "Name": "dividende",
-            "Description": "actiuni",
-            "CategoryId": 100
+            "name": "dividende",
+            "description": "actiuni",
+            "categoryId": 100
         } 
 
         await request(app)
@@ -159,9 +159,9 @@ let app
     it( 'should update a type by its id ' , async()=>{
 
         const newType={
-            "Name": "dividende",
-            "Description": "actiuni",
-            "CategoryId": 1
+            "name": "dividende",
+            "description": "actiuni",
+            "categoryId": 1
         } 
 
         await request(app)
@@ -170,9 +170,9 @@ let app
         .set('Accept','application/json')
         .then((res)=>{
             expect(res.status).toBe(200)
-            const {id,Name,Description,CategoryId}=JSON.parse(res.text)
+            const {id,name,description,categoryId}=JSON.parse(res.text)
             expect(id).toBe(1)
-            expect({Name,Description,CategoryId}).toStrictEqual(newType)
+            expect({name,description,categoryId}).toStrictEqual(newType)
         })
     })
 

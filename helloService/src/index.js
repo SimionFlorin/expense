@@ -31,7 +31,7 @@ const resolvers = {
     Todo: {
         description: () => {
             console.log('this is called only when description is defined in query or todo mutation');
-            return request('http://localhost:8080/', {method: 'GET'})
+            return request('http://localhost:8081/', {method: 'GET'})
         },
     },
 
@@ -44,6 +44,10 @@ const resolvers = {
 
 const server = new ApolloServer({typeDefs, resolvers});
 
-server.listen().then(({url}) => {
-    console.log(`🚀  Server ready at ${url}`);
+// server.listen().then(({url}) => {
+//     console.log(`🚀  Server ready at ${url}`);
+// });
+server.listen(4001).then(() => {
+    console.log(`🚀  Server ready at 4001  `);
 });
+

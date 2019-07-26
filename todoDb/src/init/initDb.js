@@ -18,6 +18,7 @@ module.exports = () => {
         stmt = db.prepare("INSERT INTO todo(text) VALUES (?)");
 
         stmt.run('test todo');
+        stmt.run('test todo2');
 
         stmt.finalize();
 

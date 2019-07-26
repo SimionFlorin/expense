@@ -8,9 +8,9 @@ beforeEach(()=>{
     app = require('../../app');
 })
     const transaction1={
-            "TransactionDate": 1563808820440,
-            "Sum": 213,
-            "Remarks": "World"
+            "transactionDate": 1563808820440,
+            "sum": 213,
+            "remarks": "World"
         }
     
     
@@ -38,9 +38,9 @@ beforeEach(()=>{
     it('should create a transaction', async()=>{
 
         const newTransaction={
-            "Sum": 22,
-            "Remarks": "ceva",
-            "CategoryId": 1,
+            "sum": 22,
+            "remarks": "ceva",
+            "typeId": 1,
         }
 
         await request(app)
@@ -49,17 +49,17 @@ beforeEach(()=>{
         .set('Accept','application/json')
         .then((res)=>{
             expect(res.status).toBe(200)
-            const ResponseWithModifiedDateFormat=Object.assign({},JSON.parse(res.text),{TransactionDate:new Date(JSON.parse(res.text).TransactionDate).toDateString()})
-            expect(ResponseWithModifiedDateFormat).toStrictEqual(Object.assign({},newTransaction,{TransactionDate:new Date().toDateString(),TransactionId:1}))
+            const ResponseWithModifiedDateFormat=Object.assign({},JSON.parse(res.text),{transactionDate:new Date(JSON.parse(res.text).transactionDate).toDateString()})
+            expect(ResponseWithModifiedDateFormat).toStrictEqual(Object.assign({},newTransaction,{transactionDate:new Date().toDateString(),transactionId:1}))
         })
     })
 
     it('should return an error', async()=>{
 
         const newTransaction={
-            "Sum": 22,
-            "Remarks": "ceva",
-            "CategoryId": 100,
+            "sum": 22,
+            "remarks": "ceva",
+            "typeId": 100,
         }
 
         await request(app)
