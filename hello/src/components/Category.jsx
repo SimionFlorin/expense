@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CategoryTypeDialog from './CategoryTypeDIalog';
 import { fetch } from './CategoriesList';
 import { addCategoryType } from './../actions/index';
+import CategoryType from '../containers/TransactionContainer';
 
 export default class Category extends Component{
 
@@ -13,11 +14,13 @@ export default class Category extends Component{
     
         
     }
-    
+    CloseCategoryDialog=()=>{
+        this.setState({isCategoryDialogOpen:false})
+    }
     async componentDidMount(){
         console.log(this.props);
         await fetch({
-            query: `{getCategoryTypes{
+            query: `{getTypesByCategoryId(categoryId:${this.props.category.categoryId}){
                     typeId,
                     name,
                     description,
@@ -26,7 +29,7 @@ export default class Category extends Component{
             })
         .then((response)=>{
             console.log(response.data);
-            response.data.getCategoryTypes.map((categoryType)=>{
+            response.data.getTypesByCategoryId.map((categoryType)=>{
                 console.log(categoryType);
                 this.props.addCategoryTypeToStore(categoryType)})
         })
@@ -50,10 +53,11 @@ export default class Category extends Component{
                     {this.props.categoryTypes.filter((categoryType)=>{
                         return categoryType.categoryId===this.props.category.categoryId}
                         ).map((categoryType)=>(
-                            <div>
+                            <CategoryType name={categoryType.name} typeId={categoryType.typeId}
+                             description={categoryType.description}>
                                 {/* <CategoryType category={categoryType}/> */}
-                                {categoryType.name}
-                            </div>
+                                
+                            </CategoryType>
                     ))}
                 </div>
             </div>

@@ -5,6 +5,7 @@ const CategoryTypeController = require('../controllers/CategoryTypeController')
 module.exports = (app) => {
     app.get('/getTransactions', TransactionController.get);
     app.get('/getTransaction/:id', TransactionController.getById);
+    app.get('/getTransactionsByTypeId/:id', TransactionController.getByTypeId);
     app.post('/Transaction', TransactionController.post)
     app.get('/Categories', X.get)
     app.get('/CategoryTypes', CategoryTypeController.get)

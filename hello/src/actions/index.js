@@ -8,7 +8,7 @@ export const addCategory=category=>({
     payload:category
 })
 
-export const addTransaction=(transaction,categoryTypeId)=>({
+export const addTransaction=(transaction)=>({
     type:'ADD_TRANSACTION',
     payload:transaction,
 })

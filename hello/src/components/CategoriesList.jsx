@@ -45,9 +45,7 @@ class CategoiesList extends React.Component{
         this.setState({isLoaded:true})
     }
 
-    CloseCategoryDialog=()=>{
-        this.setState({isCategoryDialogOpen:false})
-    }
+    
 
 
 render(){

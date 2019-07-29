@@ -1,6 +1,7 @@
 import {combineReducers} from "redux";
 import categories  from './categories';
 import categoryTypes from './categoryTypes'
+import transactions from './transactions'
 
 // export default combineReducers({
 //     default: (state = [], action) => state,
@@ -8,5 +9,6 @@ import categoryTypes from './categoryTypes'
 // types()
 export default combineReducers({
     categories,
-    categoryTypes
+    categoryTypes,
+    transactions
 })

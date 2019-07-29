@@ -31,7 +31,9 @@ const typeDefs = gql`
         getTransactions:[Transaction],
         getTransactionById(transactionId:Int!):Transaction,
         getCategoryTypeById(typeId:Int!):CategoryType,
-        getCategoryTypes:[CategoryType]
+        getCategoryTypes:[CategoryType],
+        getTypesByCategoryId(categoryId:Int!):[CategoryType],
+        getTransactionsByTypeId(typeId:Int!):[Transaction]
     }
 
     type Mutation {
@@ -69,12 +71,24 @@ const resolvers={
             console.log(response);
             return response;
         },
+        getTransactionsByTypeId:async (parent,args,context,info)=>{
+            console.log(args.typeId)
+            const response = await request(`http://localhost:8080/getTransactionsByTypeId/`+args.typeId, { method: 'GET', json: true });
+            console.log(response);
+            return response;
+        },
         getCategoryTypes: ()=>{
             return request('http://localhost:8080/CategoryTypes',{method:'GET', json:true}).then((response)=>{
                 console.log(response)
                 return response
             })
         },
+        getTypesByCategoryId: (parent,args,context,info)=>{
+            return request('http://localhost:8080/getTypesByCategoryId/'+args.categoryId,{method:'GET',json:true}).then((response)=>{
+                console.log(response)
+                return response
+            })
+        }
     },
     Mutation: {
         postTransaction: async(parent,args,context,info)=>{
