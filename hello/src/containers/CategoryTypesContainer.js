@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Category from '../components/Category'
-import { addCategoryType } from './../actions/index';
+import { addCategoryType, updateCategoryType } from './../actions/index';
 
 
 
@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch=> ({
-    addCategoryTypeToStore:(categoryType)=>dispatch(addCategoryType(categoryType))
+    addCategoryTypeToStore:(categoryType)=>dispatch(addCategoryType(categoryType)),
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Category)

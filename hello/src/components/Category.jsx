@@ -4,12 +4,20 @@ import { fetch } from './CategoriesList';
 import { addCategoryType } from './../actions/index';
 import CategoryType from '../containers/TransactionContainer';
 
+const {createApolloFetch}=require('apollo-fetch')
+
+export const fetchCategoryTypes = createApolloFetch({
+    uri:'http://localhost:4003/'
+})
+
 export default class Category extends Component{
 
     constructor(props){
         super(props)
         this.state={
-            isLoaded:false
+            isLoaded:false,
+            isCategoryDialogOpen:false
+            
         }
     
         
@@ -19,7 +27,7 @@ export default class Category extends Component{
     }
     async componentDidMount(){
         console.log(this.props);
-        await fetch({
+        await fetchCategoryTypes({
             query: `{getTypesByCategoryId(categoryId:${this.props.category.categoryId}){
                     typeId,
                     name,
@@ -47,17 +55,20 @@ export default class Category extends Component{
                 <CategoryTypeDialog isCategoryDialogOpen={this.state.isCategoryDialogOpen} CloseCategoryDialog={this.CloseCategoryDialog}
                 categoryId={this.props.category.categoryId} name={this.props.category.name} addCategoryTypeToStore={this.props.addCategoryTypeToStore}
                 />
+                
                 <div>
                     {/* map pe types creare componenta noua , cu filtru*/}
                     {console.log(this.props.categoryTypes)}
                     {this.props.categoryTypes.filter((categoryType)=>{
                         return categoryType.categoryId===this.props.category.categoryId}
                         ).map((categoryType)=>(
+                        
                             <CategoryType name={categoryType.name} typeId={categoryType.typeId}
-                             description={categoryType.description}>
+                             description={categoryType.description} categoryId={categoryType.categoryId}> 
                                 {/* <CategoryType category={categoryType}/> */}
                                 
                             </CategoryType>
+                            
                     ))}
                 </div>
             </div>

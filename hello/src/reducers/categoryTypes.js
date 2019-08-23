@@ -12,6 +12,16 @@ export default  (state = initialState, {type, payload}) => {
              ...state,
              payload 
             ]
+    case 'UPDATE_CATEGORY_TYPE':
+        return [
+            payload,
+            ...state.filter((categoryType)=>categoryType.typeId!==payload.typeId),
+        ]
+    case 'DELETE_CATEGORY_TYPE':
+        return [
+            ...state.filter((categoryType)=>categoryType.typeId!==payload)
+
+        ]
 
     default:
         return state

@@ -5,21 +5,22 @@ const typeDefs = gql`
     type Category{
         categoryId:Int
         name:String
-        types:[CategoryType]
-    }
-
-    type Transaction{
-        transactionId:Int!
-        transactionDate: String!
-        sum: Int!
-        remarks: String
-        typeId:Int!
+        categoryTypes:[CategoryType]
     }
     type CategoryType{
         typeId:Int!
         name:String!
         description:String
         categoryId:Int!
+        category:Category
+        transactions:[Transaction]
+    }
+    type Transaction{
+        transactionId:Int!
+        transactionDate: String!
+        sum: Int!
+        remarks: String
+        typeId:Int!
     }
     type Response{
         text:String
@@ -28,21 +29,8 @@ const typeDefs = gql`
 
     type Query{
         getCategories:[Category],
-        getTransactions:[Transaction],
-        getTransactionById(transactionId:Int!):Transaction,
-        getCategoryTypeById(typeId:Int!):CategoryType,
-        getCategoryTypes:[CategoryType],
-        getTypesByCategoryId(categoryId:Int!):[CategoryType],
-        getTransactionsByTypeId(typeId:Int!):[Transaction]
+        getCategory(categoryId:Int):Category!
     }
-
-    type Mutation {
-        postTransaction(sum:Int,remarks:String,typeId:Int,transactionDate:String):Transaction,
-        postCategoryType(name:String!,description:String,categoryId:Int!):CategoryType,
-        updateCategoryType(typeId:Int!,name:String!,description:String,categoryId:Int!):CategoryType,
-        deleteCategoryType(typeId:Int!):Response
-    }
-
 `
 
 const resolvers={
@@ -50,80 +38,71 @@ const resolvers={
         getCategories: ()=>{
             return request('http://localhost:8080/Categories',{method:'GET', json:true}).then((response)=>{
                 console.log(response)
+
                 return response
+
             })
         },
-        getTransactions: ()=>{
-            return request('http://localhost:8080/getTransactions',{method:'GET', json:true}).then((response)=>{
-                console.log(response)
-                return response
-            })
-        },
-        getTransactionById:async (parent,args,context,info)=>{
-            console.log(args.transactionId)
-            const response = await request(`http://localhost:8080/getTransaction/`+args.transactionId, { method: 'GET', json: true });
-            console.log(response);
-            return response;
-        },
-       getCategoryTypeById:async (parent,args,context,info)=>{
-            console.log(args.typeId)
-            const response = await request(`http://localhost:8080/CategoryType/`+args.typeId, { method: 'GET', json: true });
-            console.log(response);
-            return response;
-        },
-        getTransactionsByTypeId:async (parent,args,context,info)=>{
-            console.log(args.typeId)
-            const response = await request(`http://localhost:8080/getTransactionsByTypeId/`+args.typeId, { method: 'GET', json: true });
-            console.log(response);
-            return response;
-        },
-        getCategoryTypes: ()=>{
-            return request('http://localhost:8080/CategoryTypes',{method:'GET', json:true}).then((response)=>{
-                console.log(response)
-                return response
-            })
-        },
-        getTypesByCategoryId: (parent,args,context,info)=>{
-            return request('http://localhost:8080/getTypesByCategoryId/'+args.categoryId,{method:'GET',json:true}).then((response)=>{
-                console.log(response)
-                return response
-            })
+        // getCategory: (parent,args,context,info) =>{
+        //     console.log('saa', args.categoryId)
+        //     let res = resolvers.Query.getCategories().filter(category=>category.categoryId===args.categoryId)
+        //     console.log(res)
+        //     return res
+        // }
+
+    },
+    Category: {
+        categoryTypes (parent,args,context,info){
+
+            return request('http://localhost:4003/',{method:'POST',json:true,body:{query:`
+                { getTypesByCategoryId(categoryId:${parent.categoryId}){
+                    name
+                    typeId
+                    description
+                    categoryId
+                }
+                }
+            `}}).then(response=>response.data.getTypesByCategoryId)
         }
     },
-    Mutation: {
-        postTransaction: async(parent,args,context,info)=>{
-            console.log(args)
-            const response = await request(`http://localhost:8080/Transaction/`, { method: 'POST', json: true , body:args});
-            console.log(response);
-            return response;
+    CategoryType:{
+        category: (parent,args,context,info) =>{
+            // console.log('parent',parent)
+            // console.log('context',context)
+            // console.log('args',args)
+            // console.log('info',info)
+            let res = request('http://localhost:4000',{
+                method:'POST',json:true,body:{query: `{getCategory(categoryId:${parent.categoryId}){
+                        categoryId
+                        name
+                    }
+                    }`
+                }
+            }).then(response=>response.data)
+            console.log("res",res)
+            return res
         },
-        postCategoryType: async(parent,args,context,info)=>{
-            console.log(args)
-            const response = await request(`http://localhost:8080/CategoryType/`, { method: 'POST', json: true , body:args});
-            console.log(response);
-            return response;
-        },
-        updateCategoryType: async(parent,args,context,info)=>{
-            console.log(args)
+        transactions: (parent,args,context,info) => {
+            console.log('parent',parent)
+            console.log('args',args)
+            return request('http://localhost:4002',{method:'POST',json:true, body:{query:`{
+                        getTransactionsByTypeId(typeId:${parent.typeId}){
+                            transactionId
+                            transactionDate
+                            sum
+                            remarks
+                            typeId
+                        }
+                    }`
+                }}).then(response=>response.data.getTransactionsByTypeId)
+        }
+    }
 
-            const response = await request(`http://localhost:8080/CategoryType/`+args.typeId, { method: 'PUT', json: true ,
-                body:{name:args.name,description:args.description,categoryId:args.categoryId}});
-            console.log(response);
-            return response;
-        },
-        deleteCategoryType: async (parent,args,context,info)=>{
-            console.log(args.typeId)
-            const response = await request(`http://localhost:8080/CategoryType/`+args.typeId, { method: 'DELETE', json: true });
-            console.log(response);
-            return {text:response};
-        },
-    },
-    
 }
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
 })
 
 server.listen().then(({url})=>{

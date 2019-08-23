@@ -2,6 +2,7 @@ import React from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@material-ui/core';
 import { fetch } from './CategoriesList';
 import { isNullOrUndefined } from 'util';
+import { fetchTransactions } from './CategoryType';
 
  const TransactionDialog =(props)=>{
 
@@ -34,7 +35,7 @@ import { isNullOrUndefined } from 'util';
 
     const SaveTransaction= async (transactionDate)=>{
         
-         await fetch({
+         await fetchTransactions({
             query:` mutation {
                 postTransaction(remarks:"${remarks}",sum:${sum},typeId:${props.typeId},
                 transactionDate:"${transactionDate}"){

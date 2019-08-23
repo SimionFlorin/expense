@@ -18,10 +18,9 @@ export const addCategoryType=(categoryType)=>({
     payload:categoryType
 })
 
-export const updateCategoryType=(categoryType,typeId)=>({
+export const updateCategoryType=(categoryType)=>({
     type:'UPDATE_CATEGORY_TYPE',
     payload:categoryType,
-    typeId
 })
 
 export const deleteCategoryType=(typeId)=>({
