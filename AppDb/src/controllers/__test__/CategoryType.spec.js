@@ -1,5 +1,5 @@
 const request=require('supertest')
-const initalData=require('helloDb/src/init/initialData.js')
+const initalData=require('AppDb/src/init/initialData.js')
 
 
 describe(' CategoryTypeController tests ', () => {
